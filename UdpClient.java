@@ -119,8 +119,8 @@ public class UdpClient {
         return packet;
     }
 
-    public static short psudeoHrdUdp(int UdpLength, int port, byte[] data){
-        int length = 20 + UdpLength;
+    public static short psudeoHrdUdp(int size, int port, byte[] data){
+        int length = 20 + size;
         byte[] packet = new byte[length];
         packet[0] = (byte) 13;
         packet[1] = (byte) 208;
@@ -132,14 +132,14 @@ public class UdpClient {
         packet[7] = (byte) 182;
         packet[8] = 0x0;
         packet[9] = 0x11;
-        packet[10] = (byte) (UdpLength >> 8);
-        packet[11] = (byte) (UdpLength & 0xFF);
+        packet[10] = (byte) (size >> 8);
+        packet[11] = (byte) (size & 0xFF);
         packet[12] = (byte) 0xFF;
         packet[13] = (byte) 0xFF;
         packet[14] = (byte) ((port & 0xFF00) >>> 8);
         packet[15] = (byte) (port & 0x00FF);
-        packet[16] = (byte) (UdpLength >> 8);
-        packet[17] = (byte) (UdpLength & 0xFF);
+        packet[16] = (byte) (size >> 8);
+        packet[17] = (byte) (size & 0xFF);
 
         for (int i = 0; i < data.length; ++i){
             packet[i+18] = data[i];
